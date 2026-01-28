@@ -1,0 +1,88 @@
+name: Auto-Repair Failed Build
+
+on:
+  issues:
+    types: [opened, labeled]
+
+jobs:
+  repair:
+    # Only run when issue has build-failure label
+    if: contains(github.event.issue.labels.*.name, 'build-failure')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Extract Issue Context
+        id: context
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || '';
+            
+            // Extract PR number from issue body
+            const prMatch = body.match(/PR.*#(\d+)/i) || body.match(/pull\/(\d+)/i);
+            const prNumber = prMatch ? parseInt(prMatch[1], 10) : null;
+            
+            return JSON.stringify({
+              issueNumber: issue.number,
+              repo: `${context.repo.owner}/${context.repo.repo}`,
+              prNumber,
+              errorContext: body.substring(0, 10000)
+            });
+
+      - name: Post Starting Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '🤖 **Auto-repair workflow triggered.** Calling repair service...'
+            });
+
+      - name: Call Cloud Run Repair Endpoint
+        id: repair
+        env:
+          RUNNER_TOKEN: ${{ secrets.RUNNER_TOKEN }}
+          CLOUD_RUN_URL: ${{ secrets.CLOUD_RUN_URL }}
+        run: |
+          CONTEXT='${{ steps.context.outputs.result }}'
+          
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST "${CLOUD_RUN_URL}/repair-from-issue" \
+            -H "Authorization: Bearer ${RUNNER_TOKEN}" \
+            -H "Content-Type: application/json" \
+            -d "${CONTEXT}")
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | head -n-1)
+          
+          echo "response_code=${HTTP_CODE}" >> $GITHUB_OUTPUT
+          echo "response_body=${BODY}" >> $GITHUB_OUTPUT
+          
+          if [ "$HTTP_CODE" -ge 400 ]; then
+            echo "Repair endpoint returned error: ${BODY}"
+            exit 1
+          fi
+
+      - name: Comment Result
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const success = '${{ steps.repair.outcome }}' === 'success';
+            const responseBody = '${{ steps.repair.outputs.response_body }}' || 'No response';
+            
+            let comment;
+            if (success) {
+              comment = `✅ **Auto-repair workflow completed.**\n\n\`\`\`json\n${responseBody}\n\`\`\``;
+            } else {
+              comment = `❌ **Auto-repair workflow failed.**\n\nPlease check the workflow logs for details.\n\n\`\`\`\n${responseBody}\n\`\`\``;
+            }
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: comment
+            });
