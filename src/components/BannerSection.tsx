@@ -1,64 +1,67 @@
-import { motion } from "framer-motion";
-import { ArrowDownRight } from "lucide-react";
-import { Orb } from "@/components/ui/orb";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Orb } from '@/components/ui/orb';
+import { ArrowRight } from 'lucide-react';
 
 export function BannerSection() {
   return (
-    <section className="relative h-screen flex flex-col justify-end p-6 md:p-12 overflow-hidden">
-      <div className="absolute top-1/4 right-0 w-1/2 h-1/2 pointer-events-none">
-        <Orb className="opacity-40" />
+    <section className="relative min-h-[90vh] flex items-center pt-32 pb-24 px-6 overflow-hidden">
+      {/* Background Orb - Resolves Import Error */}
+      <div className="absolute top-1/4 right-[-5%] z-0">
+        <Orb color="hsl(var(--primary))" size={400} />
       </div>
-      
-      <div className="relative z-10 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
-        <div className="lg:col-span-8">
-          <motion.h1 
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: "circOut" }}
-            className="text-[12vw] leading-[0.8] font-black italic mb-6 motion-blur-in"
-          >
-            URBAN<br />
-            <span className="text-stroke">KINETICISM</span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="max-w-md text-secondary font-mono text-sm leading-relaxed mb-8 border-l-3 border-accent pl-4"
-          >
-            A fusion of high-performance sportswear aesthetics and metropolitan architectural grit. 
-            Engineered for the velocity of the modern megalopolis.
-          </motion.p>
-        </div>
 
-        <div className="lg:col-span-4 flex flex-col gap-4">
+      <div className="container mx-auto relative z-10">
+        <div className="grid grid-cols-12 gap-8">
+          {/* Main Content Block with shadow and blur as per critique */}
           <motion.div 
-            whileHover={{ scale: 1.05 }}
-            className="brutalist-card bg-accent text-primary relative group cursor-pointer"
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "circOut" }}
+            className="col-span-12 lg:col-span-8 bg-background/40 backdrop-blur-xl border border-secondary/10 p-12 md:p-20 shadow-2xl relative"
           >
-            <div className="absolute top-2 right-2">
-              <ArrowDownRight size={24} />
-            </div>
-            <span className="block text-xs font-mono font-bold mb-1">MODULE_01</span>
-            <span className="text-2xl font-black">EXPLORE DROP</span>
+            <motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: "100px" }}
+              transition={{ delay: 0.5, duration: 1 }}
+              className="h-1 bg-accent mb-12"
+            />
+            
+            <h1 className="text-6xl md:text-8xl leading-none font-black mb-8 mix-blend-difference">
+              METROPOLITAN <br /> 
+              <span className="text-primary italic">PERFORMANCE</span>
+            </h1>
+            
+            <p className="max-w-xl text-lg text-muted font-mono mb-12 uppercase tracking-tight">
+              High-intensity urban infrastructure for the next generation of digital architects. Brutalist geometry meets kinetic efficiency.
+            </p>
+
+            <motion.button 
+              whileHover={{ scale: 1.05, x: 10 }}
+              className="flex items-center gap-4 bg-secondary text-background px-10 py-6 font-mono font-bold uppercase"
+            >
+              Initialize Project <ArrowRight size={20} />
+            </motion.button>
           </motion.div>
-          
-          <div className="flex gap-4">
-            <div className="flex-1 h-32 border-3 border-muted/50 p-4 flex flex-col justify-between">
-              <span className="text-[10px] font-mono text-muted uppercase">Latency</span>
-              <span className="text-2xl font-black">0.02ms</span>
-            </div>
-            <div className="flex-1 h-32 border-3 border-muted/50 p-4 flex flex-col justify-between bg-primary/40 backdrop-blur-md">
-              <span className="text-[10px] font-mono text-muted uppercase">Strain</span>
-              <span className="text-2xl font-black">450KG</span>
-            </div>
+
+          {/* Overlapping Typography Detail */}
+          <div className="hidden lg:block col-span-4 relative">
+             <motion.div 
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 0.1, y: 0 }}
+              className="absolute bottom-0 right-0 origin-bottom-right rotate-90 whitespace-nowrap"
+             >
+                <span className="text-[12rem] font-black leading-none tracking-tighter">
+                  URBANISM
+                </span>
+             </motion.div>
           </div>
         </div>
       </div>
-
-      <div className="absolute top-0 right-0 p-12 hidden lg:block">
-        <div className="w-px h-64 bg-gradient-to-b from-accent to-transparent" />
+      
+      {/* Image Integration */}
+      <div className="absolute bottom-0 left-[60%] w-full h-full -z-10 opacity-20 filter grayscale">
+        ///IMG:metropolitan brutalist architecture skyscraper|portrait|editorial///
       </div>
     </section>
   );

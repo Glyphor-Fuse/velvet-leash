@@ -1,92 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 220 20% 8%;
-    --foreground: 0 0% 98%;
-    --primary: 210 15% 12%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 210 5% 70%;
-    --secondary-foreground: 210 15% 12%;
-    --accent: 65 95% 60%;
-    --accent-foreground: 210 15% 12%;
-    --muted: 215 10% 40%;
-    --muted-foreground: 210 5% 70%;
-    --border: 210 15% 20%;
-    --input: 210 15% 20%;
-    --ring: 65 95% 60%;
-    --radius: 0rem;
+    --primary: 65 95% 52%;
+    --secondary: 215 15% 12%;
+    --accent: 20 95% 55%;
+    --background: 210 8% 98%;
+    --foreground: 210 12% 8%;
+    --muted: 210 5% 45%;
   }
-}
 
-@layer base {
-  * {
-    @apply border-border;
-  }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans selection:bg-primary/30;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-black uppercase tracking-tighter;
+
+  h1, h2, h3, h4, .font-brutalist {
+    @apply font-mono uppercase tracking-tighter;
   }
 }
 
-.brutalist-card {
-  @apply border-3 border-foreground bg-primary p-6 transition-all duration-300;
-  box-shadow: 8px 8px 0px 0px hsl(var(--accent));
+.brutalist-border {
+  @apply border border-secondary/10;
 }
 
-.brutalist-card:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 12px 12px 0px 0px hsl(var(--accent));
-}
-
-.text-stroke {
-  -webkit-text-stroke: 1px hsl(var(--secondary));
-  color: transparent;
-}
-
-.power-column {
-  @apply relative overflow-hidden border-x border-muted/20;
-}
-
-.motion-blur-in {
-  filter: blur(8px);
-  animation: blur-out 0.8s forwards ease-out;
-}
-
-@keyframes blur-out {
-  to { filter: blur(0); }
-}
-
-/* Pexels Image Attribution Styles */
-.image-slot {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 8px;
-}
-.image-slot img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-.image-attribution {
-  position: absolute;
-  bottom: 4px;
-  right: 8px;
-  font-size: 10px;
-  color: rgba(255,255,255,0.7);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.image-attribution:hover {
-  color: rgba(255,255,255,0.95);
+.parallax-bg {
+  transform: translateZ(-1px) scale(2);
 }

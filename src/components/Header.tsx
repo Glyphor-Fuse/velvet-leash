@@ -1,32 +1,36 @@
-import { motion } from "framer-motion";
-import { Menu, Search, ShoppingBag } from "lucide-react";
+import React from 'react';
+import { motion } from 'framer-motion';
 
 export function Header() {
   return (
-    <header className="fixed top-0 left-0 w-full z-50 mix-blend-difference">
-      <nav className="flex items-center justify-between px-6 py-4 md:px-12 border-b border-transparent hover:border-accent transition-colors duration-500">
-        <motion.div 
-          initial={{ x: -20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          className="flex items-center gap-2"
-        >
-          <div className="w-8 h-8 bg-accent" />
-          <span className="text-2xl font-black tracking-tighter text-foreground italic">KINETIC</span>
-        </motion.div>
-
-        <div className="hidden md:flex items-center gap-12 font-mono text-xs tracking-[0.3em] uppercase">
-          <a href="#" className="hover:text-accent transition-colors">Performance</a>
-          <a href="#" className="hover:text-accent transition-colors">Apparel</a>
-          <a href="#" className="hover:text-accent transition-colors">System</a>
-          <a href="#" className="hover:text-accent transition-colors">Archive</a>
+    <motion.header 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="fixed top-0 left-0 w-full z-50 mix-blend-difference border-b border-white/5 backdrop-blur-md"
+    >
+      <div className="container mx-auto px-6 h-20 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-primary rounded-none" />
+          <span className="font-mono font-bold text-white tracking-tighter text-xl">METRO_OS</span>
         </div>
+        
+        <nav className="hidden md:flex items-center gap-12">
+          {['Archive', 'Systems', 'Protocol', 'Terminal'].map((item) => (
+            <a 
+              key={item} 
+              href={`#${item.toLowerCase()}`}
+              className="text-white/70 hover:text-primary font-mono text-sm uppercase tracking-widest transition-colors"
+            >
+              {item}
+            </a>
+          ))}
+        </nav>
 
-        <div className="flex items-center gap-6">
-          <Search size={20} className="cursor-pointer hover:text-accent" />
-          <ShoppingBag size={20} className="cursor-pointer hover:text-accent" />
-          <Menu size={20} className="cursor-pointer hover:text-accent" />
+        <div className="flex items-center gap-4">
+           <span className="font-mono text-white/50 text-xs hidden sm:block uppercase">Ver 4.0.2</span>
+           <div className="w-4 h-4 bg-accent animate-pulse" />
         </div>
-      </nav>
-    </header>
+      </div>
+    </motion.header>
   );
 }

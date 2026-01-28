@@ -1,39 +1,40 @@
-import { Header } from "@/components/Header";
-import { BannerSection } from "@/components/BannerSection";
-import { FeaturesSection } from "@/components/FeaturesSection";
-import { TechSpecsSection } from "@/components/TechSpecsSection";
-import { MotionShowcase } from "@/components/MotionShowcase";
-import { Footer } from "@/components/Footer";
-import { LiquidEther } from "@/components/ui/LiquidEther";
+import React, { useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { Header } from '@/components/Header';
+import { BannerSection } from '@/components/BannerSection';
+import { FeaturesSection } from '@/components/FeaturesSection';
+import { ComingSoon } from '@/components/ComingSoon';
+import { Footer } from '@/components/Footer';
+import { LiquidEther } from '@/components/ui/LiquidEther';
 
 export default function Index() {
+  const { scrollYProgress } = useScroll();
+  const yParallax = useTransform(scrollYProgress, [0, 1], [0, -100]);
+
   return (
-    <main className="relative min-h-screen selection:bg-accent selection:text-primary">
-      <LiquidEther />
+    <div className="relative min-h-screen overflow-x-hidden selection:bg-primary selection:text-secondary">
+      {/* Background Layer with Motion Parallax */}
+      <motion.div 
+        style={{ y: yParallax }}
+        className="fixed inset-0 z-[-1]"
+      >
+        <LiquidEther />
+      </motion.div>
+
       <Header />
-      <BannerSection />
       
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-0 border-y-5 border-primary">
-        <aside className="lg:col-span-1 hidden lg:flex flex-col border-r border-muted/20 items-center py-20 justify-between">
-          <span className="rotate-90 text-[10px] font-mono tracking-[0.5em] text-muted whitespace-nowrap">ESTABLISHED.2024</span>
-          <div className="h-32 w-px bg-accent/30" />
-          <span className="rotate-90 text-[10px] font-mono tracking-[0.5em] text-muted whitespace-nowrap">TYPE.MODULAR_GRIT</span>
-        </aside>
-
-        <div className="lg:col-span-10">
+      <main className="relative">
+        <BannerSection />
+        
+        <div className="container mx-auto px-6 py-24 space-y-48">
           <FeaturesSection />
-          <MotionShowcase />
-          <TechSpecsSection />
+          <div className="flex justify-center items-center py-20">
+             <ComingSoon />
+          </div>
         </div>
-
-        <aside className="lg:col-span-1 hidden lg:flex flex-col border-l border-muted/20 items-center py-20 justify-between">
-          <span className="-rotate-90 text-[10px] font-mono tracking-[0.5em] text-muted whitespace-nowrap">SYSTEM.CORE_001</span>
-          <div className="h-32 w-px bg-accent/30" />
-          <span className="-rotate-90 text-[10px] font-mono tracking-[0.5em] text-muted whitespace-nowrap">KINETIC_FLOW</span>
-        </aside>
-      </div>
+      </main>
 
       <Footer />
-    </main>
+    </div>
   );
 }
