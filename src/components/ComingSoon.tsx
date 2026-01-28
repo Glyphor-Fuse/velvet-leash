@@ -1,45 +1,49 @@
 import { motion } from "framer-motion";
-import { Orb } from "@/components/ui/orb";
 
 export function ComingSoon() {
   return (
-    <section className="py-32 px-8 overflow-hidden relative border-b-2 border-muted">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-30 pointer-events-none">
-        <Orb className="w-full h-full" />
-      </div>
-
-      <div className="max-w-[1800px] mx-auto text-center relative z-10">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-center"
+      >
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="inline-block mb-12"
+          animate={{ 
+            scale: [1, 1.05, 1],
+            rotate: [0, 2, -2, 0]
+          }}
+          transition={{ 
+            duration: 4, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="mb-8"
         >
-          <div className="w-48 h-48 rounded-full border-4 border-dashed border-accent flex items-center justify-center p-4">
-             <div className="w-full h-full rounded-full border-2 border-accent flex items-center justify-center">
-                <span className="font-display text-accent text-sm tracking-tighter">PHASE_01</span>
-             </div>
+          <div className="w-24 h-24 mx-auto rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-2xl shadow-purple-500/30">
+            <span className="text-4xl">✨</span>
           </div>
         </motion.div>
-
-        <h2 className="text-6xl md:text-[8rem] font-bold leading-none mb-12">
-          REVEAL <br /> <span className="text-accent italic">PENDING</span>
-        </h2>
         
-        <p className="text-xl text-secondary max-w-2xl mx-auto uppercase tracking-[0.3em] mb-12">
-          The next evolution of metropolitan architecture is under construction. Join the registry for early terminal access.
+        <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
+          Coming Soon
+        </h1>
+        
+        <p className="text-lg md:text-xl text-purple-200/80 mb-8 max-w-md mx-auto">
+          We're working hard to bring you something amazing. Stay tuned!
         </p>
-
-        <form className="max-w-md mx-auto flex gap-4">
-          <input 
-            type="email" 
-            placeholder="USER@NETWORK.ID" 
-            className="flex-1 bg-transparent border-2 border-muted px-6 py-4 outline-none focus:border-accent uppercase tracking-widest transition-colors"
-          />
-          <button className="px-8 py-4 bg-foreground text-background font-bold uppercase hover:bg-accent transition-colors">
-            Link
-          </button>
-        </form>
-      </div>
-    </section>
+        
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          className="flex items-center justify-center gap-2 text-purple-300/60"
+        >
+          <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+          <span className="text-sm">Building in progress</span>
+        </motion.div>
+      </motion.div>
+    </div>
   );
 }
