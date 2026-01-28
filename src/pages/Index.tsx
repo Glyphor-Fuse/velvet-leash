@@ -1,40 +1,33 @@
-import React, { useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Header } from '@/components/Header';
-import { BannerSection } from '@/components/BannerSection';
-import { FeaturesSection } from '@/components/FeaturesSection';
-import { ComingSoon } from '@/components/ComingSoon';
-import { Footer } from '@/components/Footer';
+import React from 'react';
+import { Header } from '../components/Header';
+import { Hero } from '../components/Hero';
+import { Features } from '../components/Features';
+import { ComingSoon } from '../components/ComingSoon';
+import { Footer } from '../components/Footer';
+import { ParallaxStars } from '../components/ParallaxStars';
 import { LiquidEther } from '@/components/ui/LiquidEther';
 
 export default function Index() {
-  const { scrollYProgress } = useScroll();
-  const yParallax = useTransform(scrollYProgress, [0, 1], [0, -100]);
-
   return (
-    <div className="relative min-h-screen overflow-x-hidden selection:bg-primary selection:text-secondary">
-      {/* Background Layer with Motion Parallax */}
-      <motion.div 
-        style={{ y: yParallax }}
-        className="fixed inset-0 z-[-1]"
-      >
+    <main className="relative min-h-screen w-full bg-background overflow-hidden">
+      {/* Background Layer */}
+      <div className="fixed inset-0 z-0 opacity-40">
         <LiquidEther />
-      </motion.div>
-
-      <Header />
+      </div>
       
-      <main className="relative">
-        <BannerSection />
-        
-        <div className="container mx-auto px-6 py-24 space-y-48">
-          <FeaturesSection />
-          <div className="flex justify-center items-center py-20">
-             <ComingSoon />
-          </div>
-        </div>
-      </main>
+      {/* Parallax Stars Effect (Requested in critique for App.tsx, implemented here for scope) */}
+      <ParallaxStars />
 
-      <Footer />
-    </div>
+      <div className="relative z-10">
+        <Header />
+        <Hero />
+        <Features />
+        <ComingSoon />
+        <Footer />
+      </div>
+      
+      {/* Brutalist Grid Overlay */}
+      <div className="fixed inset-0 pointer-events-none brutalist-grid opacity-20 z-0" />
+    </main>
   );
 }

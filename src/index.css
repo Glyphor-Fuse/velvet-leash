@@ -1,30 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Syncopate:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --primary: 65 95% 52%;
-    --secondary: 215 15% 12%;
-    --accent: 20 95% 55%;
-    --background: 210 8% 98%;
-    --foreground: 210 12% 8%;
-    --muted: 210 5% 45%;
-  }
+    --background: 220 12% 8%;
+    --foreground: 0 0% 98%;
 
+    --primary: 60 92% 52%;
+    --primary-foreground: 220 12% 8%;
+
+    --secondary: 210 5% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --accent: 63 95% 58%;
+    --accent-foreground: 220 12% 8%;
+
+    --muted: 215 10% 25%;
+    --muted-foreground: 215 10% 65%;
+
+    --border: 215 10% 20%;
+    --input: 215 10% 20%;
+    --ring: 60 92% 52%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
   body {
-    @apply bg-background text-foreground font-sans selection:bg-primary/30;
+    @apply bg-background text-foreground font-sans;
+    overflow-x: hidden;
   }
-
-  h1, h2, h3, h4, .font-brutalist {
-    @apply font-mono uppercase tracking-tighter;
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display uppercase tracking-tighter;
   }
 }
 
-.brutalist-border {
-  @apply border border-secondary/10;
+.kinetic-blur {
+  filter: url(#blur-filter);
 }
 
-.parallax-bg {
-  transform: translateZ(-1px) scale(2);
+.brutalist-grid {
+  background-image: linear-gradient(to right, #ffffff05 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff05 1px, transparent 1px);
+  background-size: 40px 40px;
 }
