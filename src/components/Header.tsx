@@ -1,43 +1,62 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Menu, Zap } from 'lucide-react';
+import { motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 export function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <motion.header 
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className="fixed top-0 left-0 w-full z-50 border-b border-white/10 backdrop-blur-xl bg-background/80"
-    >
-      <div className="max-w-[1800px] mx-auto flex justify-between items-center px-6 py-4">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary flex items-center justify-center">
-            <Zap className="text-background fill-background" size={24} />
-          </div>
-          <span className="text-2xl font-black tracking-tighter uppercase">Velvet Leash</span>
-        </div>
-        
-        <nav className="hidden md:flex items-center gap-12">
-          {['Specs', 'Performance', 'Archive', 'Pre-Order'].map((item) => (
+    <header className="fixed top-0 left-0 w-full z-50 border-b-2 border-muted bg-background/80 backdrop-blur-xl">
+      <div className="max-w-[1800px] mx-auto flex items-center justify-between h-20 px-8">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center gap-2"
+        >
+          <div className="w-8 h-8 bg-accent" />
+          <span className="font-display text-2xl font-bold tracking-tighter">METRO.WAG</span>
+        </motion.div>
+
+        <nav className="hidden md:flex gap-12">
+          {['Archive', 'Atelier', 'Logistics', 'Contact'].map((item) => (
             <motion.a
               key={item}
               href={`#${item.toLowerCase()}`}
-              className="text-sm font-bold uppercase tracking-widest hover:text-primary transition-colors"
-              whileHover={{ x: 5 }}
+              whileHover={{ color: 'hsl(var(--accent))' }}
+              className="uppercase text-sm font-bold tracking-widest text-secondary"
             >
               {item}
             </motion.a>
           ))}
         </nav>
 
-        <motion.button 
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-primary text-background px-6 py-2 font-black uppercase text-xs tracking-widest"
-        >
-          Join Ranks
-        </motion.button>
+        <div className="flex items-center gap-6">
+          <button className="hidden sm:block px-6 py-2 border-2 border-accent text-accent font-bold uppercase text-xs hover:bg-accent hover:text-background transition-colors">
+            Access Terminal
+          </button>
+          <button 
+            className="md:hidden text-foreground"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={32} /> : <Menu size={32} />}
+          </button>
+        </div>
       </div>
-    </motion.header>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute top-20 left-0 w-full bg-background border-b-2 border-muted p-8 md:hidden"
+        >
+          <div className="flex flex-col gap-6">
+            {['Archive', 'Atelier', 'Logistics', 'Contact'].map((item) => (
+              <a key={item} href="#" className="text-2xl font-display uppercase">{item}</a>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </header>
   );
 }

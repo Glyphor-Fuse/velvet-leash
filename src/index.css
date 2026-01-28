@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Syncopate:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Syncopate:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,48 +6,44 @@
 
 @layer base {
   :root {
-    --background: 220 12% 8%;
+    --primary: 210 10% 12%;
+    --secondary: 210 5% 70%;
+    --accent: 65 85% 55%;
+    --background: 210 10% 8%;
     --foreground: 0 0% 98%;
-
-    --primary: 60 92% 52%;
-    --primary-foreground: 220 12% 8%;
-
-    --secondary: 210 5% 15%;
-    --secondary-foreground: 0 0% 98%;
-
-    --accent: 63 95% 58%;
-    --accent-foreground: 220 12% 8%;
-
-    --muted: 215 10% 25%;
-    --muted-foreground: 215 10% 65%;
-
-    --border: 215 10% 20%;
-    --input: 215 10% 20%;
-    --ring: 60 92% 52%;
-
-    --radius: 0.5rem;
+    --muted: 210 5% 25%;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-muted;
   }
   body {
-    @apply bg-background text-foreground font-sans;
-    overflow-x: hidden;
+    @apply bg-background text-foreground font-sans overflow-x-hidden;
   }
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4 {
     @apply font-display uppercase tracking-tighter;
   }
 }
 
-.kinetic-blur {
-  filter: url(#blur-filter);
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
 }
 
-.brutalist-grid {
-  background-image: linear-gradient(to right, #ffffff05 1px, transparent 1px),
-    linear-gradient(to bottom, #ffffff05 1px, transparent 1px);
-  background-size: 40px 40px;
+.border-blueprint {
+  border: 2px solid hsl(var(--muted));
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-background;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-accent;
 }

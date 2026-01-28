@@ -1,38 +1,25 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { MoveLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <div className="text-center">
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-9xl font-black text-primary mb-4"
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-background">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="border-blueprint p-12 text-center"
+      >
+        <h1 className="text-9xl font-display text-accent mb-4">404</h1>
+        <p className="text-secondary uppercase tracking-[0.2em] mb-8">Navigation Error: Outside Urban Limits</p>
+        <Link 
+          to="/" 
+          className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-background font-bold uppercase transition-transform hover:scale-105"
         >
-          404
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="text-xl text-muted-foreground mb-8 uppercase tracking-widest"
-        >
-          Coordinates Lost in Transit
-        </motion.p>
-        <Link to="/">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 bg-foreground text-background px-8 py-4 font-bold uppercase tracking-tighter"
-          >
-            <ArrowLeft size={20} />
-            Return to Hub
-          </motion.button>
+          <MoveLeft size={20} />
+          Back to Base
         </Link>
-      </div>
+      </motion.div>
     </div>
   );
 }
